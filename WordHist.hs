@@ -58,7 +58,6 @@ freqsString freqs =
     -- Functions to find the sizes.  Since frequencies are rounded up, there will never be a word with no hashes
     numSpaces word = maxLen - length word + 1
     numHashes freq = ceiling (ratio * fromIntegral freq)
-    -- filteredFreqs = filter ((0 ==) . numHashes . snd) freqs
   in
     -- Generate the final line: the word, then the correct number of spaces, then the correct number of hashes
     map (\(w,l) -> (w ++ replicate (numSpaces w) ' ' ++ replicate (numHashes l) '#')) freqs
