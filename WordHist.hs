@@ -31,12 +31,11 @@ getFreqs str =
     dropPunct = reverse . dropWhile isPunctuation
     stripPunct = dropPunct . dropPunct
     -- Define a funtion to update the frequency map if necessary
-    updateEntry m wrd = if null stripped then m else Map.insertWith (+) stripped 1 m
-      where stripped = stripPunct wrd
-    -- Add up the frequencies
-    addFreqs = foldl updateEntry Map.empty
+    updateEntry m word = if null stripped then m else Map.insertWith (+) stripped 1 m
+      where stripped = stripPunct word
   in
-    addFreqs wordList 
+    -- Add up the frequencies
+    foldl updateEntry Map.empty wordList
 
 -- Sort the elements of the map backwards by frequency, then lexicographically, and return (word, frequency pairs)
 sortFreqs :: Map.Map String Int -> [(String, Int)]
@@ -49,18 +48,17 @@ freqsString :: [(String, Int)] -> [String]
 freqsString freqs =
   let
     -- Compute the max word length and max frequency
-    maxLen = maximum (map (\(word,_) -> (length word)) freqs)
+    maxLen = maximum (map (length . fst) freqs)
     maxFreq = maximum (map snd freqs)
-  
     -- Compute the scaling of the bars.  Don't scale up, only down to fit the 80 column max
     ratio =
       if maxLen + maxFreq + 1 > 80 then
         fromIntegral (80 - maxLen - 1) / fromIntegral maxFreq
       else 1
-    
     -- Functions to find the sizes.  Since frequencies are rounded up, there will never be a word with no hashes
     numSpaces word = maxLen - length word + 1
     numHashes freq = ceiling (ratio * fromIntegral freq)
+    -- filteredFreqs = filter ((0 ==) . numHashes . snd) freqs
   in
     -- Generate the final line: the word, then the correct number of spaces, then the correct number of hashes
     map (\(w,l) -> (w ++ replicate (numSpaces w) ' ' ++ replicate (numHashes l) '#')) freqs
