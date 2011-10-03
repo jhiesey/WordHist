@@ -53,7 +53,6 @@ freqsString freqs =
     maxFreq = maximum (map snd freqs)
   
     -- Compute the scaling of the bars.  Don't scale up, only down to fit the 80 column max
-    ratio :: Rational
     ratio =
       if maxLen + maxFreq + 1 > 80 then
         fromIntegral (80 - maxLen - 1) / fromIntegral maxFreq
@@ -65,5 +64,3 @@ freqsString freqs =
   in
     -- Generate the final line: the word, then the correct number of spaces, then the correct number of hashes
     map (\(w,l) -> (w ++ replicate (numSpaces w) ' ' ++ replicate (numHashes l) '#')) freqs
-
-	
