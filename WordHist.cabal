@@ -1,0 +1,10 @@
+Name:               WordHist
+Version:            1.0
+Cabal-Version:      >= 1.2
+Author:             John Hiesey
+Synopsis:           Ascii art word-frequency histogram generator
+Build-Type:         Simple
+
+Executable wordhist
+    Main-Is:        WordHist.hs
+    Build-Depends:  base >= 3, containers, haskell98

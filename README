@@ -1,0 +1,17 @@
+Author: John Hiesey (jhiesey@stanford.edu)
+
+To build:
+cabal configure
+cabal build
+(executable is dist/build/wordhist/wordhist)
+
+--OR--
+
+ghc --make WordHist.hs
+(executable is WordHist)
+
+To run:
+wordhist
+    Reads from stdin, use ^D (EOF) to terminate
+wordhist file [file...]
+    Reads from the given files
