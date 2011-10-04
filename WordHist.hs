@@ -55,9 +55,11 @@ freqsString freqs =
       if maxLen + maxFreq + 1 > 80 then
         fromIntegral (80 - maxLen - 1) / fromIntegral maxFreq
       else 1
-    -- Functions to find the sizes.  Since frequencies are rounded up, there will never be a word with no hashes
+    -- Functions to find the sizes
     numSpaces word = maxLen - length word + 1
-    numHashes freq = ceiling (ratio * fromIntegral freq)
+    numHashes freq = round (ratio * fromIntegral freq)
+    -- Filter out words with small frequencies
+    filteredFreqs = filter ((0 /=) . numHashes . snd) freqs
   in
     -- Generate the final line: the word, then the correct number of spaces, then the correct number of hashes
-    map (\(w,l) -> (w ++ replicate (numSpaces w) ' ' ++ replicate (numHashes l) '#')) freqs
+    map (\(w,l) -> (w ++ replicate (numSpaces w) ' ' ++ replicate (numHashes l) '#')) filteredFreqs
