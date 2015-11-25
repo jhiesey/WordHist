@@ -7,4 +7,4 @@ Build-Type:         Simple
 
 Executable wordhist
     Main-Is:        WordHist.hs
-    Build-Depends:  base >= 3, containers, haskell98
+    Build-Depends:  base >= 3, containers

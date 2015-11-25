@@ -1,4 +1,5 @@
-import System
+import System.IO
+import System.Environment
 import Data.List
 import Data.Char
 import qualified Data.Map as Map
